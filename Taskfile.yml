@@ -1,0 +1,21 @@
+version: "3"
+method: timestamp
+run: once
+
+output: prefixed
+
+env:
+  BUILD_DIR: build
+
+tasks:
+  build:
+    desc: Build
+    cmds:
+      - mkdir -p {{.BUILD_DIR}}
+      - go build -o {{.BUILD_DIR}}/ ./...
+
+  run:
+    deps:
+      - build
+    cmds:
+      - "{{.BUILD_DIR}}/kvv {{.CLI_ARGS}}"
